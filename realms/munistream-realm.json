@@ -1,0 +1,124 @@
+{
+  "realm": "munistream",
+  "enabled": true,
+  "displayName": "MuniStream",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": false,
+  "rememberMe": true,
+  "verifyEmail": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "sslRequired": "external",
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "passwordPolicy": "length(8) and upperCase(1) and lowerCase(1) and digits(1)",
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator with full system access"
+      },
+      {
+        "name": "manager",
+        "description": "Manager with workflow management permissions"
+      },
+      {
+        "name": "reviewer",
+        "description": "Reviewer who can review documents and workflows"
+      },
+      {
+        "name": "approver",
+        "description": "Approver who can approve workflows and documents"
+      },
+      {
+        "name": "viewer",
+        "description": "Read-only access to system"
+      },
+      {
+        "name": "citizen",
+        "description": "Basic citizen user"
+      },
+      {
+        "name": "verified_citizen",
+        "description": "Citizen with verified identity"
+      },
+      {
+        "name": "business_entity",
+        "description": "Business or organization account"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "munistream-admin",
+      "name": "MuniStream Admin Portal",
+      "description": "Administrative portal for MuniStream staff",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": false,
+      "webOrigins": [
+        "http://localhost:3000",
+        "https://admin.munistream.com"
+      ],
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "https://admin.munistream.com/*"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    },
+    {
+      "clientId": "munistream-citizen",
+      "name": "MuniStream Citizen Portal",
+      "description": "Public portal for citizens to access government services",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": false,
+      "webOrigins": [
+        "http://localhost:3001",
+        "http://localhost:5173",
+        "https://portal.munistream.com"
+      ],
+      "redirectUris": [
+        "http://localhost:3001/*",
+        "http://localhost:5173/*",
+        "https://portal.munistream.com/*"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    },
+    {
+      "clientId": "munistream-backend",
+      "name": "MuniStream Backend Service",
+      "description": "Backend API service for MuniStream",
+      "enabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "protocol": "openid-connect",
+      "secret": "changeme-backend-secret-in-production",
+      "fullScopeAllowed": true
+    }
+  ],
+  "internationalizationEnabled": true,
+  "supportedLocales": ["en", "es"],
+  "defaultLocale": "en"
+}
