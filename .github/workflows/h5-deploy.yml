@@ -1,0 +1,214 @@
+name: H5 Keycloak Multi-tenant Deployment
+
+on:
+  push:
+    branches: [ develop ]
+    paths:
+      - 'docker-compose.h5.yml'
+      - 'deploy-h5.sh'
+      - '.env.h5'
+      - 'realms/**'
+      - 'themes/**'
+      - 'providers/**'
+  workflow_dispatch:
+    inputs:
+      target_client:
+        description: 'Target client to deploy (all, core, conapesca, tesoreriacdmx)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+        - all
+        - core
+        - conapesca
+        - tesoreriacdmx
+      force_rebuild:
+        description: 'Force rebuild all containers'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      core-changed: ${{ steps.changes.outputs.core }}
+      conapesca-changed: ${{ steps.changes.outputs.conapesca }}
+      teso-changed: ${{ steps.changes.outputs.teso }}
+      global-changed: ${{ steps.changes.outputs.global }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            global:
+              - 'docker-compose.h5.yml'
+              - 'deploy-h5.sh'
+              - '.env.h5'
+              - 'providers/**'
+            core:
+              - 'realms/core/**'
+              - 'themes/core/**'
+            conapesca:
+              - 'realms/conapesca/**'
+              - 'themes/conapesca/**'
+            teso:
+              - 'realms/tesoreriacdmx/**'
+              - 'themes/tesoreriacdmx/**'
+
+  deploy-keycloak:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.global-changed == 'true' || needs.detect-changes.outputs.core-changed == 'true' || needs.detect-changes.outputs.conapesca-changed == 'true' || needs.detect-changes.outputs.teso-changed == 'true' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Get Workflow EC2 instance IP
+        id: get-instance
+        run: |
+          INSTANCE_IP=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=munistream-dev-workflow-ec2" \
+                     "Name=instance-state-name,Values=running" \
+            --query 'Reservations[0].Instances[0].PublicIpAddress' \
+            --output text)
+          echo "instance-ip=$INSTANCE_IP" >> $GITHUB_OUTPUT
+          echo "Workflow EC2 IP: $INSTANCE_IP"
+
+      - name: Get Aurora endpoint from SSM
+        id: get-aurora
+        run: |
+          AURORA_ENDPOINT=$(aws ssm get-parameter \
+            --name "/munistream/dev/aurora/endpoint" \
+            --query 'Parameter.Value' \
+            --output text)
+          echo "aurora-endpoint=$AURORA_ENDPOINT" >> $GITHUB_OUTPUT
+          echo "Aurora endpoint retrieved"
+
+      - name: Get database password from SSM
+        id: get-password
+        run: |
+          DB_PASSWORD=$(aws ssm get-parameter \
+            --name "/munistream/dev/aurora/password" \
+            --with-decryption \
+            --query 'Parameter.Value' \
+            --output text)
+          echo "db-password=$DB_PASSWORD" >> $GITHUB_OUTPUT
+          echo "Database password retrieved"
+
+      - name: Determine deployment target
+        id: target
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "target=${{ github.event.inputs.target_client }}" >> $GITHUB_OUTPUT
+            echo "force-rebuild=${{ github.event.inputs.force_rebuild }}" >> $GITHUB_OUTPUT
+          elif [ "${{ needs.detect-changes.outputs.global-changed }}" = "true" ]; then
+            echo "target=all" >> $GITHUB_OUTPUT
+            echo "force-rebuild=false" >> $GITHUB_OUTPUT
+          else
+            # Smart deployment based on changed files
+            targets=""
+            if [ "${{ needs.detect-changes.outputs.core-changed }}" = "true" ]; then
+              targets="$targets core"
+            fi
+            if [ "${{ needs.detect-changes.outputs.conapesca-changed }}" = "true" ]; then
+              targets="$targets conapesca"
+            fi
+            if [ "${{ needs.detect-changes.outputs.teso-changed }}" = "true" ]; then
+              targets="$targets teso"
+            fi
+
+            # If multiple clients changed, deploy all
+            word_count=$(echo $targets | wc -w)
+            if [ $word_count -gt 1 ]; then
+              echo "target=all" >> $GITHUB_OUTPUT
+            else
+              echo "target=$targets" >> $GITHUB_OUTPUT
+            fi
+            echo "force-rebuild=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ steps.get-instance.outputs.instance-ip }} >> ~/.ssh/known_hosts
+
+      - name: Copy files to EC2
+        run: |
+          scp -r . ubuntu@${{ steps.get-instance.outputs.instance-ip }}:/tmp/munistream-keycloak/
+
+      - name: Deploy Keycloak on EC2
+        run: |
+          ssh ubuntu@${{ steps.get-instance.outputs.instance-ip }} << 'EOF'
+            set -e
+            cd /tmp/munistream-keycloak
+
+            # Export environment variables
+            export AURORA_ENDPOINT="${{ steps.get-aurora.outputs.aurora-endpoint }}"
+            export DB_PASSWORD="${{ steps.get-password.outputs.db-password }}"
+            export KEYCLOAK_ADMIN="${{ secrets.KEYCLOAK_ADMIN }}"
+            export KEYCLOAK_ADMIN_PASSWORD="${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}"
+
+            # Create realms and themes directories if they don't exist
+            sudo mkdir -p /home/ubuntu/keycloak/realms/{core,conapesca,tesoreriacdmx}
+            sudo mkdir -p /home/ubuntu/keycloak/themes/{core,conapesca,tesoreriacdmx}
+            sudo mkdir -p /home/ubuntu/keycloak/providers
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/keycloak
+
+            # Copy realm and theme files if they exist
+            if [ -d "realms" ]; then
+              cp -r realms/* /home/ubuntu/keycloak/realms/ || true
+            fi
+            if [ -d "themes" ]; then
+              cp -r themes/* /home/ubuntu/keycloak/themes/ || true
+            fi
+            if [ -d "providers" ]; then
+              cp -r providers/* /home/ubuntu/keycloak/providers/ || true
+            fi
+
+            # Run deployment
+            chmod +x deploy-h5.sh
+            ./deploy-h5.sh ${{ steps.target.outputs.force-rebuild }} ${{ steps.target.outputs.target }}
+          EOF
+
+      - name: Verify deployment
+        run: |
+          ssh ubuntu@${{ steps.get-instance.outputs.instance-ip }} << 'EOF'
+            echo "🔍 Verifying Keycloak deployment..."
+            docker-compose -f /tmp/munistream-keycloak/docker-compose.h5.yml ps
+
+            echo "🔍 Testing Keycloak endpoints..."
+            for port in 9000 9001 9002; do
+              if curl -f http://localhost:$port/health/ready >/dev/null 2>&1; then
+                echo "✅ Keycloak on port $port is healthy"
+              elif curl -f http://localhost:$port >/dev/null 2>&1; then
+                echo "⚠️ Keycloak on port $port is responding but may still be initializing"
+              else
+                echo "❌ Keycloak on port $port is not responding"
+              fi
+            done
+          EOF
+
+      - name: Clean up
+        if: always()
+        run: |
+          ssh ubuntu@${{ steps.get-instance.outputs.instance-ip }} << 'EOF'
+            rm -rf /tmp/munistream-keycloak || true
+          EOF
+          rm -f ~/.ssh/id_rsa
