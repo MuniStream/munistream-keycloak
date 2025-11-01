@@ -45,9 +45,61 @@ body.atdt-login-body {
   background-color: var(--color-neutral-300);
   color: var(--color-neutral-700);
   display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header styles.  Provides a consistent top bar with logo and title.
+   The header sits above the main content and does not shrink. */
+.atdt-header {
+  background-color: var(--color-neutral-100);
+  border-bottom: 1px solid var(--color-neutral-200);
+  padding: var(--spacing-2) 0;
+  flex-shrink: 0;
+}
+
+.atdt-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-2);
+  padding-right: var(--spacing-2);
+  box-sizing: border-box;
+}
+
+.atdt-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.atdt-header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  text-decoration: none;
+}
+
+.atdt-header-logo {
+  width: 48px;
+  height: auto;
+}
+
+.atdt-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Main content wrapper.  Fills remaining space and centers its contents. */
+.atdt-main {
+  flex: 1;
+  display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  padding-top: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
 }
 
 .atdt-login-wrapper {

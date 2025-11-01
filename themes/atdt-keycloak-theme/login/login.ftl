@@ -20,8 +20,21 @@
     <link rel="stylesheet" href="${url.resourcesPath}/css/style.css"/>
   </head>
   <body class="atdt-login-body">
-    <div class="atdt-login-wrapper">
-      <div class="atdt-login-card">
+    <#-- Top navigation/header.  This bar provides a consistent brand area across pages, as
+         recommended in the UI Kit.  It contains the Llave MX logo and the product name.
+         Additional navigation items can be added here if needed. -->
+    <header class="atdt-header">
+      <div class="atdt-container atdt-header-inner">
+        <div class="atdt-header-brand">
+          <img class="atdt-header-logo" src="${url.resourcesPath}/img/logo.svg" alt="Llave MX" />
+          <span class="atdt-header-title">Llave MX</span>
+        </div>
+      </div>
+    </header>
+    <main class="atdt-main">
+      <div class="atdt-container">
+        <div class="atdt-login-wrapper">
+          <div class="atdt-login-card">
         <div class="atdt-login-header">
           <img class="atdt-logo" src="${url.resourcesPath}/img/logo.svg" alt="Llave MX"/>
           <h1 class="atdt-title">${realm.displayName!'Llave MX'}</h1>
@@ -86,7 +99,9 @@
             <a href="${properties['privacyLink']?default('#')}" target="_blank">Aviso de Privacidad</a>.
           </small>
         </div>
-      </div>
-    </div>
+          </div><!-- /.atdt-login-card -->
+        </div><!-- /.atdt-login-wrapper -->
+      </div><!-- /.atdt-container -->
+    </main>
   </body>
 </html>
