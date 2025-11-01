@@ -11,18 +11,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>${message.summary!msg("errorTitle", "Error")}</title>
+    <title>${message.summary!'Error'}</title>
     <link rel="stylesheet" href="${url.resourcesPath}/css/style.css"/>
   </head>
   <body class="atdt-login-body">
     <div class="atdt-login-wrapper">
       <div class="atdt-login-card">
-        <h1 class="atdt-title">${message.summary!msg("errorTitle", "Se produjo un error")}</h1>
-        <p>${message.detail?default(msg("unexpectedError", "Ha ocurrido un error inesperado."))}</p>
+        <h1 class="atdt-title">${message.summary!'Se produjo un error'}</h1>
+        <p>${message.detail?default('Ha ocurrido un error inesperado.')}</p>
         <#-- Offer a way back to the client application when available -->
         <#if client?? && client.baseUrl??>
           <p style="text-align:center; margin-top:16px;">
-            <a class="atdt-btn atdt-btn-primary" href="${client.baseUrl}">${msg("backToApplication", "Volver a la aplicación")}</a>
+            <a class="atdt-btn atdt-btn-primary" href="${client.baseUrl}">Volver a la aplicación</a>
           </p>
         </#if>
       </div>

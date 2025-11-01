@@ -38,7 +38,8 @@
         <form id="kc-form-login" class="atdt-form" action="${url.loginAction}" method="post">
           <div class="atdt-form-group">
             <label for="username" class="atdt-label">${msg("usernameOrEmail")?default("Usuario o correo electrónico")}</label>
-            <input id="username" name="username" type="text" class="atdt-input" value="${auth.attemptedUsername}" autofocus required />
+            <#-- auth may be null when the form is rendered for the first time. Use a default empty string to avoid InvalidReferenceException. -->
+            <input id="username" name="username" type="text" class="atdt-input" value="${(auth.attemptedUsername)!''}" autofocus required />
           </div>
 
           <div class="atdt-form-group">
