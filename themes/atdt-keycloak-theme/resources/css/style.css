@@ -1,0 +1,199 @@
+/*
+ * ATDT Keycloak login theme stylesheet
+ *
+ * This stylesheet implements the color palette, typography and spacing
+ * guidelines defined in the UI Kit and the Llave MX “Guía de uso”.
+ * Colors are stored as CSS custom properties so that they can be
+ * reused consistently throughout the theme.  The 8pt grid is used
+ * for spacing, and the Noto Sans font is imported via Google Fonts.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Primary brand colours */
+  --color-primary: #611232;          /* Guinda 600 – primary action colour */
+  --color-primary-dark: #3a0b1e;     /* Guinda 170 – darker shade for hover */
+  /* Secondary brand colours */
+  --color-secondary: #a57f2c;        /* Dorado 500/110 – accent colour */
+  --color-secondary-light: #e6d194;  /* Dorado 210 – lighter accent */
+  /* Neutral palette */
+  --color-neutral-900: #161a1d;      /* Neutro 800 – darkest neutral */
+  --color-neutral-700: #575b5e;      /* Neutro 700 */
+  --color-neutral-500: #9b9d9e;      /* Neutro 500 */
+  --color-neutral-300: #f3f3f3;      /* Neutro 300 – light background */
+  --color-neutral-200: #dededf;      /* Neutro 200 – input borders */
+  --color-neutral-100: #ffffff;      /* White */
+  /* Validation colours */
+  --color-error: #c62026;            /* Mistake – red for errors */
+  --color-error-light: #fae5e5;      /* Mistake Light – error background */
+  /* Typography */
+  --font-base: 'Noto Sans', sans-serif;
+  /* Spacing (8pt grid) */
+  --spacing-1: 8px;
+  --spacing-2: 16px;
+  --spacing-3: 24px;
+  --spacing-4: 32px;
+  /* Border radius */
+  --border-radius: 8px;
+}
+
+body.atdt-login-body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-base);
+  background-color: var(--color-neutral-300);
+  color: var(--color-neutral-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.atdt-login-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: var(--spacing-2);
+}
+
+.atdt-login-card {
+  background-color: var(--color-neutral-100);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  padding: var(--spacing-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.atdt-login-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2);
+}
+
+.atdt-logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: var(--spacing-2);
+}
+
+.atdt-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.atdt-subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: var(--color-neutral-700);
+}
+
+.atdt-alert {
+  padding: var(--spacing-1);
+  border-radius: var(--border-radius);
+  font-size: 14px;
+}
+
+.atdt-alert-error {
+  background-color: var(--color-error-light);
+  color: var(--color-error);
+}
+
+.atdt-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.atdt-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.atdt-label {
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--color-neutral-700);
+}
+
+.atdt-input {
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--border-radius);
+  outline: none;
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-900);
+}
+
+.atdt-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(97, 18, 50, 0.2);
+}
+
+.atdt-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.atdt-btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-neutral-100);
+}
+
+.atdt-btn-primary:hover,
+.atdt-btn-primary:focus {
+  background-color: var(--color-primary-dark);
+}
+
+.atdt-remember-me {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-size: 14px;
+}
+
+.atdt-links {
+  margin-top: var(--spacing-1);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-1);
+  font-size: 14px;
+}
+
+.atdt-links a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.atdt-links a:hover {
+  text-decoration: underline;
+}
+
+.atdt-legal {
+  margin-top: var(--spacing-2);
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-neutral-500);
+  line-height: 1.4;
+}
+
+.atdt-legal a {
+  color: var(--color-secondary);
+  text-decoration: none;
+}
+
+.atdt-legal a:hover {
+  text-decoration: underline;
+}
