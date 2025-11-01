@@ -10,7 +10,8 @@
 -->
 
 <!DOCTYPE html>
-<html lang="${locale.currentLanguage}">
+<#-- Use the current language if available; otherwise default to Spanish (es) to avoid null reference errors -->
+<html lang="${(locale.currentLanguage)!'es'}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
