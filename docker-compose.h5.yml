@@ -1,0 +1,176 @@
+# H5 Multi-tenant Docker Compose for MuniStream Keycloak
+# This file defines 3 Keycloak containers for each client with separate realms
+
+services:
+  # Core Client Keycloak - Base ports (9000)
+  keycloak-core:
+    image: quay.io/keycloak/keycloak:25.0
+    container_name: keycloak-core
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      # Database configuration - Aurora PostgreSQL
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://${AURORA_ENDPOINT}:5432/keycloak_core
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: ${DB_PASSWORD}
+
+      # Admin credentials
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin123}
+
+      # Client configuration
+      KC_HOSTNAME: core-dev.munistream.local
+      KC_HOSTNAME_PATH: /api/auth
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HTTP_ENABLED: true
+      KC_HTTP_PORT: 8080
+
+      # Features
+      KC_FEATURES: token-exchange,admin-fine-grained-authz,hostname:v2
+
+      # Health and metrics
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+
+      # Logging
+      KC_LOG_LEVEL: ${KC_LOG_LEVEL:-INFO}
+    ports:
+      - "9000:8080"
+    volumes:
+      - ./realms/core:/opt/keycloak/data/import
+      - ./themes/core:/opt/keycloak/themes/core
+      - ./providers:/opt/keycloak/providers
+    networks:
+      - munistream-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    labels:
+      - "com.munistream.client=core"
+      - "com.munistream.service=keycloak"
+      - "com.munistream.port=9000"
+
+  # Conapesca Client Keycloak - +1 port increment (9001)
+  keycloak-conapesca:
+    image: quay.io/keycloak/keycloak:25.0
+    container_name: keycloak-conapesca
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      # Database configuration - Aurora PostgreSQL
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://${AURORA_ENDPOINT}:5432/keycloak_conapesca
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: ${DB_PASSWORD}
+
+      # Admin credentials
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin123}
+
+      # Client configuration
+      KC_HOSTNAME: conapesca-dev.munistream.local
+      KC_HOSTNAME_PATH: /api/auth
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HTTP_ENABLED: true
+      KC_HTTP_PORT: 8080
+
+      # Features
+      KC_FEATURES: token-exchange,admin-fine-grained-authz,hostname:v2
+
+      # Health and metrics
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+
+      # Logging
+      KC_LOG_LEVEL: ${KC_LOG_LEVEL:-INFO}
+    ports:
+      - "9001:8080"
+    volumes:
+      - ./realms/conapesca:/opt/keycloak/data/import
+      - ./themes/conapesca:/opt/keycloak/themes/conapesca
+      - ./providers:/opt/keycloak/providers
+    networks:
+      - munistream-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    labels:
+      - "com.munistream.client=conapesca"
+      - "com.munistream.service=keycloak"
+      - "com.munistream.port=9001"
+
+  # Tesoreriacdmx Client Keycloak - +2 port increment (9002)
+  keycloak-teso:
+    image: quay.io/keycloak/keycloak:25.0
+    container_name: keycloak-teso
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      # Database configuration - Aurora PostgreSQL
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://${AURORA_ENDPOINT}:5432/keycloak_tesoreriacdmx
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: ${DB_PASSWORD}
+
+      # Admin credentials
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin123}
+
+      # Client configuration
+      KC_HOSTNAME: tesoreriacdmx-dev.munistream.local
+      KC_HOSTNAME_PATH: /api/auth
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HTTP_ENABLED: true
+      KC_HTTP_PORT: 8080
+
+      # Features
+      KC_FEATURES: token-exchange,admin-fine-grained-authz,hostname:v2
+
+      # Health and metrics
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+
+      # Logging
+      KC_LOG_LEVEL: ${KC_LOG_LEVEL:-INFO}
+    ports:
+      - "9002:8080"
+    volumes:
+      - ./realms/tesoreriacdmx:/opt/keycloak/data/import
+      - ./themes/tesoreriacdmx:/opt/keycloak/themes/tesoreriacdmx
+      - ./providers:/opt/keycloak/providers
+    networks:
+      - munistream-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    labels:
+      - "com.munistream.client=tesoreriacdmx"
+      - "com.munistream.service=keycloak"
+      - "com.munistream.port=9002"
+
+networks:
+  munistream-network:
+    driver: bridge
+    name: munistream-network
