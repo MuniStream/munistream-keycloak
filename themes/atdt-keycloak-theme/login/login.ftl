@@ -35,6 +35,18 @@
           </div>
         </#if>
 
+        <#-- Social identity provider logins (e.g. OpenID Connect buttons) -->
+        <#if social?? && social.providers?has_content>
+          <div class="atdt-idp">
+            <p class="atdt-idp-title">${msg("doSignInWith")?default("Inicia sesión con:")}</p>
+            <div class="atdt-idp-buttons">
+              <#list social.providers as provider>
+                <a class="atdt-btn atdt-btn-secondary" href="${provider.loginUrl}">${provider.displayName}</a>
+              </#list>
+            </div>
+          </div>
+        </#if>
+
         <form id="kc-form-login" class="atdt-form" action="${url.loginAction}" method="post">
           <div class="atdt-form-group">
             <label for="username" class="atdt-label">${msg("usernameOrEmail")?default("Usuario o correo electrónico")}</label>
