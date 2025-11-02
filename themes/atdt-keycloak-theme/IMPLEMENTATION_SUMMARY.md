@@ -10,7 +10,7 @@ Este documento resume la implementación completa del tema ATDT para Keycloak 25
 
 ### 1. Sistema de Diseño Completo (`atdt-design-system.css`)
 
-**Archivo:** `resources/css/atdt-design-system.css` (27KB)
+**Archivo:** `login/resources/css/atdt-design-system.css` (27KB)
 
 Este archivo contiene el sistema de diseño **completamente reutilizable** que incluye:
 
@@ -102,7 +102,7 @@ Todos los componentes del UI KIT han sido implementados:
 
 ### 2. Estilos Específicos de Keycloak (`login.css`)
 
-**Archivo:** `resources/css/login.css` (12.5KB)
+**Archivo:** `login/resources/css/login.css` (12.5KB)
 
 Estilos específicos para las páginas de login de Keycloak:
 - Layout de página completa con header sticky
@@ -284,8 +284,8 @@ const Input = ({ label, error, ...props }) => (
 
 ### Nuevos Archivos
 ```
-✨ resources/css/atdt-design-system.css   (27KB - REUTILIZABLE)
-✨ resources/css/login.css                (12.5KB)
+✨ login/resources/css/atdt-design-system.css   (27KB - REUTILIZABLE)
+✨ login/resources/css/login.css                (12.5KB)
 ✨ login/login.ftl                        (10KB)
 ✨ login/error.ftl                        (4.7KB)
 ✨ login/info.ftl                         (3.7KB)

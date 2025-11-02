@@ -9,7 +9,7 @@
 4. Actualiza links legales en [theme.properties](theme.properties)
 
 ### Para reutilizar el CSS en React/Vite:
-1. Copia [resources/css/atdt-design-system.css](resources/css/atdt-design-system.css)
+1. Copia [login/resources/css/atdt-design-system.css](login/resources/css/atdt-design-system.css)
 2. Importa en tu proyecto: `import './atdt-design-system.css'`
 3. Usa las clases: consulta [QUICK_REFERENCE.md](QUICK_REFERENCE.md)
 
@@ -31,8 +31,8 @@
 
 | Archivo | Descripción | Líneas | Tamaño |
 |---------|-------------|--------|--------|
-| [resources/css/atdt-design-system.css](resources/css/atdt-design-system.css) | Sistema de diseño completo (REUTILIZABLE) | 1000+ | 27 KB |
-| [resources/css/login.css](resources/css/login.css) | Estilos específicos Keycloak | 400+ | 12.5 KB |
+| [login/resources/css/atdt-design-system.css](login/resources/css/atdt-design-system.css) | Sistema de diseño completo (REUTILIZABLE) | 1000+ | 27 KB |
+| [login/resources/css/login.css](login/resources/css/login.css) | Estilos específicos Keycloak | 400+ | 12.5 KB |
 | [login/login.ftl](login/login.ftl) | Plantilla login principal | 200+ | 10 KB |
 | [login/register.ftl](login/register.ftl) | Plantilla de registro | 250+ | 10.7 KB |
 | [login/login-reset-password.ftl](login/login-reset-password.ftl) | Recuperar contraseña | 100+ | 4.3 KB |
@@ -80,7 +80,7 @@ Todos los componentes del documento "UI KIT (ATDT)-1.pdf" han sido implementados
 --atdt-font-size-body: 16px;
 ```
 
-Ver [atdt-design-system.css](resources/css/atdt-design-system.css) para la lista completa.
+Ver [atdt-design-system.css](login/resources/css/atdt-design-system.css) para la lista completa.
 
 ---
 
@@ -247,10 +247,10 @@ google-chrome style-guide.html
 ### Buscar Clases CSS
 ```bash
 # Buscar todas las clases de botones
-grep "\.atdt-btn" resources/css/atdt-design-system.css
+grep "\.atdt-btn" login/resources/css/atdt-design-system.css
 
 # Buscar colores
-grep "color-" resources/css/atdt-design-system.css | grep "^  --"
+grep "color-" login/resources/css/atdt-design-system.css | grep "^  --"
 ```
 
 ---

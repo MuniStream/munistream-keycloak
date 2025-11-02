@@ -306,7 +306,7 @@ systemctl restart keycloak
 
 ### Cambiar Colores de Marca
 
-Editar `resources/css/atdt-design-system.css`:
+Editar `login/resources/css/atdt-design-system.css`:
 
 ```css
 :root {
