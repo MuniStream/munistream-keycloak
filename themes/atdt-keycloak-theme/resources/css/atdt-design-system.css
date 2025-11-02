@@ -1,0 +1,938 @@
+/**
+ * ============================================================================
+ * ATDT Design System - CSS Implementation
+ * ============================================================================
+ * 
+ * Based on: UI KIT (ATDT) - Febrero 2025
+ * Version: 1.0.0
+ * 
+ * This stylesheet implements the complete ATDT design system including:
+ * - 8pt Grid System
+ * - Color Palette (Primary, Secondary, Neutral, Validation)
+ * - Typography Hierarchy (Noto Sans)
+ * - Component Library (Buttons, Inputs, Forms, etc.)
+ * - Responsive Breakpoints
+ * 
+ * This is designed to be reusable across projects (Keycloak, React, etc.)
+ * ============================================================================
+ */
+
+/* ============================================================================
+   FONTS
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap');
+
+/* ============================================================================
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ============================================================================ */
+
+:root {
+  /* ---------------------------------------------------------------------------
+     COLOR PALETTE - PRIMARY (Guinda)
+     --------------------------------------------------------------------------- */
+  --atdt-color-guinda-170: #3A0B1E;
+  --atdt-color-guinda-160: #611232;
+  --atdt-color-guinda-150: #9b2247;
+  --atdt-color-guinda-110: #F0ECED;
+  
+  /* Primary action colors */
+  --atdt-color-primary: var(--atdt-color-guinda-160);
+  --atdt-color-primary-dark: var(--atdt-color-guinda-170);
+  --atdt-color-primary-light: var(--atdt-color-guinda-150);
+  --atdt-color-primary-lighter: var(--atdt-color-guinda-110);
+
+  /* ---------------------------------------------------------------------------
+     COLOR PALETTE - SECONDARY (Dorado)
+     --------------------------------------------------------------------------- */
+  --atdt-color-dorado-110: #a57f2c;
+  --atdt-color-dorado-210: #e6d194;
+  
+  --atdt-color-secondary: var(--atdt-color-dorado-110);
+  --atdt-color-secondary-light: var(--atdt-color-dorado-210);
+
+  /* ---------------------------------------------------------------------------
+     COLOR PALETTE - NEUTRAL
+     --------------------------------------------------------------------------- */
+  --atdt-color-neutral-800: #161a1d;
+  --atdt-color-neutral-700: #575b5e;
+  --atdt-color-neutral-600: #7a7c7e;
+  --atdt-color-neutral-500: #9b9d9e;
+  --atdt-color-neutral-400: #bcbebe;
+  --atdt-color-neutral-300: #f3f3f3;
+  --atdt-color-neutral-200: #dededf;
+  --atdt-color-neutral-100: #ffffff;
+
+  /* ---------------------------------------------------------------------------
+     COLOR PALETTE - VALIDATION
+     --------------------------------------------------------------------------- */
+  --atdt-color-mistake: #c62026;
+  --atdt-color-mistake-light: #fae5e5;
+  --atdt-color-success: #0a7e3e;
+  --atdt-color-success-light: #e5f5ed;
+  --atdt-color-information: #0066cc;
+  --atdt-color-information-light: #e5f0ff;
+  --atdt-color-warning: #f59e0b;
+
+  /* Semantic color aliases */
+  --atdt-color-error: var(--atdt-color-mistake);
+  --atdt-color-error-light: var(--atdt-color-mistake-light);
+
+  /* ---------------------------------------------------------------------------
+     TYPOGRAPHY
+     --------------------------------------------------------------------------- */
+  --atdt-font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Font sizes - Following UI KIT specifications */
+  --atdt-font-size-h1: 40px;
+  --atdt-font-size-h2: 32px;
+  --atdt-font-size-h3: 24px;
+  --atdt-font-size-subtitle: 20px;
+  --atdt-font-size-body: 16px;
+  --atdt-font-size-button: 16px;
+  --atdt-font-size-caption: 14px;
+  
+  /* Line heights - Following UI KIT specifications */
+  --atdt-line-height-h1: 54px;
+  --atdt-line-height-h2: 44px;
+  --atdt-line-height-h3: 33px;
+  --atdt-line-height-subtitle: 27px;
+  --atdt-line-height-body: 22px;
+  --atdt-line-height-button: 22px;
+  --atdt-line-height-caption: 19px;
+  
+  /* Font weights */
+  --atdt-font-weight-regular: 400;
+  --atdt-font-weight-medium: 500;
+  --atdt-font-weight-semibold: 600;
+  --atdt-font-weight-bold: 700;
+
+  /* ---------------------------------------------------------------------------
+     SPACING - 8pt Grid System
+     --------------------------------------------------------------------------- */
+  --atdt-spacing-0: 0;
+  --atdt-spacing-1: 8px;
+  --atdt-spacing-2: 16px;
+  --atdt-spacing-3: 24px;
+  --atdt-spacing-4: 32px;
+  --atdt-spacing-5: 40px;
+  --atdt-spacing-6: 48px;
+  --atdt-spacing-7: 56px;
+  --atdt-spacing-8: 64px;
+  --atdt-spacing-9: 72px;
+  --atdt-spacing-10: 80px;
+
+  /* ---------------------------------------------------------------------------
+     GRID SYSTEM - Responsive Breakpoints
+     --------------------------------------------------------------------------- */
+  --atdt-breakpoint-xs: 320px;
+  --atdt-breakpoint-sm: 375px;
+  --atdt-breakpoint-md: 768px;
+  --atdt-breakpoint-lg: 1024px;
+  --atdt-breakpoint-xl: 1440px;
+  
+  /* Grid columns */
+  --atdt-grid-columns-mobile: 4;
+  --atdt-grid-columns-tablet: 8;
+  --atdt-grid-columns-desktop: 12;
+  
+  /* Grid gutters */
+  --atdt-grid-gutter-mobile: 16px;
+  --atdt-grid-gutter-tablet: 24px;
+  --atdt-grid-gutter-desktop: 24px;
+  
+  /* Grid margins */
+  --atdt-grid-margin-mobile: 16px;
+  --atdt-grid-margin-tablet: 24px;
+  --atdt-grid-margin-desktop: 56px;
+
+  /* ---------------------------------------------------------------------------
+     BORDERS & SHADOWS
+     --------------------------------------------------------------------------- */
+  --atdt-border-radius-sm: 4px;
+  --atdt-border-radius-md: 8px;
+  --atdt-border-radius-lg: 12px;
+  
+  --atdt-border-width: 1px;
+  --atdt-border-width-thick: 2px;
+  
+  --atdt-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --atdt-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --atdt-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Focus outline */
+  --atdt-focus-ring: 0 0 0 3px rgba(97, 18, 50, 0.2);
+
+  /* ---------------------------------------------------------------------------
+     TRANSITIONS
+     --------------------------------------------------------------------------- */
+  --atdt-transition-fast: 150ms ease-in-out;
+  --atdt-transition-base: 200ms ease-in-out;
+  --atdt-transition-slow: 300ms ease-in-out;
+}
+
+/* ============================================================================
+   RESET & BASE STYLES
+   ============================================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ============================================================================
+   TYPOGRAPHY SYSTEM
+   ============================================================================ */
+
+.atdt-h1,
+.atdt-heading-1 {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-h1);
+  line-height: var(--atdt-line-height-h1);
+  font-weight: var(--atdt-font-weight-bold);
+  color: var(--atdt-color-neutral-800);
+  margin: 0;
+}
+
+.atdt-h2,
+.atdt-heading-2 {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-h2);
+  line-height: var(--atdt-line-height-h2);
+  font-weight: var(--atdt-font-weight-bold);
+  color: var(--atdt-color-neutral-800);
+  margin: 0;
+}
+
+.atdt-h3,
+.atdt-heading-3 {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-h3);
+  line-height: var(--atdt-line-height-h3);
+  font-weight: var(--atdt-font-weight-semibold);
+  color: var(--atdt-color-neutral-800);
+  margin: 0;
+}
+
+.atdt-subtitle {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-subtitle);
+  line-height: var(--atdt-line-height-subtitle);
+  font-weight: var(--atdt-font-weight-bold);
+  color: var(--atdt-color-neutral-800);
+  margin: 0;
+}
+
+.atdt-body,
+.atdt-text {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-body);
+  line-height: var(--atdt-line-height-body);
+  font-weight: var(--atdt-font-weight-regular);
+  color: var(--atdt-color-neutral-700);
+  margin: 0;
+}
+
+.atdt-body-semibold {
+  font-weight: var(--atdt-font-weight-semibold);
+}
+
+.atdt-caption {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-caption);
+  line-height: var(--atdt-line-height-caption);
+  font-weight: var(--atdt-font-weight-regular);
+  color: var(--atdt-color-neutral-600);
+  margin: 0;
+}
+
+/* ============================================================================
+   BUTTON COMPONENTS
+   ============================================================================ */
+
+.atdt-btn {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-button);
+  line-height: var(--atdt-line-height-button);
+  font-weight: var(--atdt-font-weight-semibold);
+  padding: var(--atdt-spacing-2) var(--atdt-spacing-3);
+  border-radius: var(--atdt-border-radius-md);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--atdt-transition-base);
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Primary Button */
+.atdt-btn-primary {
+  background-color: var(--atdt-color-primary);
+  color: var(--atdt-color-neutral-100);
+  border: var(--atdt-border-width) solid var(--atdt-color-primary);
+}
+
+.atdt-btn-primary:hover {
+  background-color: var(--atdt-color-primary-dark);
+  border-color: var(--atdt-color-primary-dark);
+}
+
+.atdt-btn-primary:focus {
+  outline: none;
+  box-shadow: var(--atdt-focus-ring);
+}
+
+.atdt-btn-primary:active {
+  background-color: var(--atdt-color-guinda-170);
+  transform: translateY(1px);
+}
+
+.atdt-btn-primary:disabled {
+  background-color: var(--atdt-color-neutral-400);
+  border-color: var(--atdt-color-neutral-400);
+  color: var(--atdt-color-neutral-600);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Outlined Button (Secondary) */
+.atdt-btn-outlined,
+.atdt-btn-secondary {
+  background-color: transparent;
+  color: var(--atdt-color-primary);
+  border: var(--atdt-border-width-thick) solid var(--atdt-color-primary);
+}
+
+.atdt-btn-outlined:hover,
+.atdt-btn-secondary:hover {
+  background-color: var(--atdt-color-primary-lighter);
+  border-color: var(--atdt-color-primary-dark);
+  color: var(--atdt-color-primary-dark);
+}
+
+.atdt-btn-outlined:focus,
+.atdt-btn-secondary:focus {
+  outline: none;
+  box-shadow: var(--atdt-focus-ring);
+}
+
+.atdt-btn-outlined:active,
+.atdt-btn-secondary:active {
+  background-color: var(--atdt-color-primary-lighter);
+  transform: translateY(1px);
+}
+
+.atdt-btn-outlined:disabled,
+.atdt-btn-secondary:disabled {
+  background-color: transparent;
+  border-color: var(--atdt-color-neutral-400);
+  color: var(--atdt-color-neutral-500);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Text Button */
+.atdt-btn-text {
+  background-color: transparent;
+  color: var(--atdt-color-primary);
+  border: none;
+  padding: var(--atdt-spacing-1) var(--atdt-spacing-2);
+}
+
+.atdt-btn-text:hover {
+  background-color: var(--atdt-color-primary-lighter);
+  color: var(--atdt-color-primary-dark);
+}
+
+.atdt-btn-text:focus {
+  outline: none;
+  box-shadow: var(--atdt-focus-ring);
+}
+
+.atdt-btn-text:active {
+  background-color: var(--atdt-color-primary-lighter);
+}
+
+.atdt-btn-text:disabled {
+  color: var(--atdt-color-neutral-500);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Button sizes */
+.atdt-btn-sm {
+  padding: var(--atdt-spacing-1) var(--atdt-spacing-2);
+  font-size: var(--atdt-font-size-caption);
+}
+
+.atdt-btn-lg {
+  padding: var(--atdt-spacing-3) var(--atdt-spacing-4);
+  font-size: var(--atdt-font-size-subtitle);
+}
+
+.atdt-btn-block {
+  display: flex;
+  width: 100%;
+}
+
+/* ============================================================================
+   FORM COMPONENTS
+   ============================================================================ */
+
+/* Form Group */
+.atdt-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--atdt-spacing-1);
+  margin-bottom: var(--atdt-spacing-2);
+}
+
+/* Label */
+.atdt-label,
+.atdt-form-label {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-caption);
+  line-height: var(--atdt-line-height-caption);
+  font-weight: var(--atdt-font-weight-semibold);
+  color: var(--atdt-color-neutral-800);
+  margin: 0;
+}
+
+/* Text Input */
+.atdt-input,
+.atdt-text-input {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-body);
+  line-height: var(--atdt-line-height-body);
+  padding: calc(var(--atdt-spacing-1) + 4px) var(--atdt-spacing-2);
+  border: var(--atdt-border-width) solid var(--atdt-color-neutral-400);
+  border-radius: var(--atdt-border-radius-md);
+  background-color: var(--atdt-color-neutral-100);
+  color: var(--atdt-color-neutral-800);
+  transition: all var(--atdt-transition-base);
+  outline: none;
+  width: 100%;
+}
+
+.atdt-input::placeholder {
+  color: var(--atdt-color-neutral-500);
+}
+
+.atdt-input:hover {
+  border-color: var(--atdt-color-neutral-600);
+}
+
+.atdt-input:focus {
+  border-color: var(--atdt-color-primary);
+  box-shadow: var(--atdt-focus-ring);
+}
+
+.atdt-input:disabled {
+  background-color: var(--atdt-color-neutral-300);
+  color: var(--atdt-color-neutral-500);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Input states */
+.atdt-input.atdt-input-error,
+.atdt-input.is-invalid {
+  border-color: var(--atdt-color-error);
+}
+
+.atdt-input.atdt-input-error:focus,
+.atdt-input.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(198, 32, 38, 0.2);
+}
+
+.atdt-input.atdt-input-success,
+.atdt-input.is-valid {
+  border-color: var(--atdt-color-success);
+}
+
+.atdt-input.atdt-input-success:focus,
+.atdt-input.is-valid:focus {
+  box-shadow: 0 0 0 3px rgba(10, 126, 62, 0.2);
+}
+
+/* Helper text */
+.atdt-help-text,
+.atdt-form-text {
+  font-size: var(--atdt-font-size-caption);
+  line-height: var(--atdt-line-height-caption);
+  color: var(--atdt-color-neutral-600);
+  margin-top: 4px;
+}
+
+.atdt-error-text,
+.atdt-invalid-feedback {
+  font-size: var(--atdt-font-size-caption);
+  line-height: var(--atdt-line-height-caption);
+  color: var(--atdt-color-error);
+  margin-top: 4px;
+}
+
+.atdt-success-text,
+.atdt-valid-feedback {
+  font-size: var(--atdt-font-size-caption);
+  line-height: var(--atdt-line-height-caption);
+  color: var(--atdt-color-success);
+  margin-top: 4px;
+}
+
+/* Checkbox and Radio */
+.atdt-checkbox,
+.atdt-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--atdt-spacing-1);
+  cursor: pointer;
+  font-size: var(--atdt-font-size-body);
+  color: var(--atdt-color-neutral-800);
+}
+
+.atdt-checkbox input[type="checkbox"],
+.atdt-radio input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--atdt-color-primary);
+}
+
+/* Select / Dropdown */
+.atdt-select {
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-body);
+  line-height: var(--atdt-line-height-body);
+  padding: calc(var(--atdt-spacing-1) + 4px) var(--atdt-spacing-2);
+  border: var(--atdt-border-width) solid var(--atdt-color-neutral-400);
+  border-radius: var(--atdt-border-radius-md);
+  background-color: var(--atdt-color-neutral-100);
+  color: var(--atdt-color-neutral-800);
+  transition: all var(--atdt-transition-base);
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.atdt-select:hover {
+  border-color: var(--atdt-color-neutral-600);
+}
+
+.atdt-select:focus {
+  border-color: var(--atdt-color-primary);
+  box-shadow: var(--atdt-focus-ring);
+}
+
+.atdt-select:disabled {
+  background-color: var(--atdt-color-neutral-300);
+  color: var(--atdt-color-neutral-500);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ============================================================================
+   ALERT / MESSAGE COMPONENTS
+   ============================================================================ */
+
+.atdt-alert {
+  padding: var(--atdt-spacing-2);
+  border-radius: var(--atdt-border-radius-md);
+  font-size: var(--atdt-font-size-body);
+  line-height: var(--atdt-line-height-body);
+  border: var(--atdt-border-width) solid transparent;
+  margin-bottom: var(--atdt-spacing-2);
+}
+
+.atdt-alert-error,
+.atdt-alert-danger {
+  background-color: var(--atdt-color-error-light);
+  color: var(--atdt-color-error);
+  border-color: var(--atdt-color-error);
+}
+
+.atdt-alert-success {
+  background-color: var(--atdt-color-success-light);
+  color: var(--atdt-color-success);
+  border-color: var(--atdt-color-success);
+}
+
+.atdt-alert-info,
+.atdt-alert-information {
+  background-color: var(--atdt-color-information-light);
+  color: var(--atdt-color-information);
+  border-color: var(--atdt-color-information);
+}
+
+.atdt-alert-warning {
+  background-color: #fff7ed;
+  color: var(--atdt-color-warning);
+  border-color: var(--atdt-color-warning);
+}
+
+/* ============================================================================
+   HEADER COMPONENT
+   ============================================================================ */
+
+.atdt-header {
+  background-color: var(--atdt-color-neutral-100);
+  border-bottom: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+  padding: var(--atdt-spacing-2) 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--atdt-shadow-sm);
+}
+
+.atdt-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.atdt-header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--atdt-spacing-2);
+}
+
+.atdt-header-logo {
+  height: 40px;
+  width: auto;
+}
+
+.atdt-header-title {
+  font-size: var(--atdt-font-size-h3);
+  font-weight: var(--atdt-font-weight-bold);
+  color: var(--atdt-color-primary);
+  line-height: 1;
+}
+
+/* ============================================================================
+   CONTAINER & LAYOUT
+   ============================================================================ */
+
+.atdt-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--atdt-grid-margin-mobile);
+  padding-right: var(--atdt-grid-margin-mobile);
+}
+
+@media (min-width: 768px) {
+  .atdt-container {
+    padding-left: var(--atdt-grid-margin-tablet);
+    padding-right: var(--atdt-grid-margin-tablet);
+  }
+}
+
+@media (min-width: 1024px) {
+  .atdt-container {
+    max-width: 1440px;
+    padding-left: var(--atdt-grid-margin-desktop);
+    padding-right: var(--atdt-grid-margin-desktop);
+  }
+}
+
+/* ============================================================================
+   CARD COMPONENT
+   ============================================================================ */
+
+.atdt-card {
+  background-color: var(--atdt-color-neutral-100);
+  border-radius: var(--atdt-border-radius-lg);
+  box-shadow: var(--atdt-shadow-md);
+  padding: var(--atdt-spacing-3);
+  border: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+}
+
+.atdt-card-header {
+  margin-bottom: var(--atdt-spacing-3);
+  padding-bottom: var(--atdt-spacing-2);
+  border-bottom: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+}
+
+.atdt-card-body {
+  padding: var(--atdt-spacing-2) 0;
+}
+
+.atdt-card-footer {
+  margin-top: var(--atdt-spacing-3);
+  padding-top: var(--atdt-spacing-2);
+  border-top: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+}
+
+/* ============================================================================
+   MODAL COMPONENT
+   ============================================================================ */
+
+.atdt-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(22, 26, 29, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: var(--atdt-spacing-2);
+}
+
+.atdt-modal {
+  background-color: var(--atdt-color-neutral-100);
+  border-radius: var(--atdt-border-radius-lg);
+  box-shadow: var(--atdt-shadow-lg);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.atdt-modal-header {
+  padding: var(--atdt-spacing-3);
+  border-bottom: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.atdt-modal-title {
+  font-size: var(--atdt-font-size-h3);
+  font-weight: var(--atdt-font-weight-bold);
+  color: var(--atdt-color-neutral-800);
+  margin: 0;
+}
+
+.atdt-modal-body {
+  padding: var(--atdt-spacing-3);
+}
+
+.atdt-modal-footer {
+  padding: var(--atdt-spacing-3);
+  border-top: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+  display: flex;
+  gap: var(--atdt-spacing-2);
+  justify-content: flex-end;
+}
+
+/* ============================================================================
+   TABS COMPONENT
+   ============================================================================ */
+
+.atdt-tabs {
+  display: flex;
+  border-bottom: var(--atdt-border-width-thick) solid var(--atdt-color-neutral-200);
+  gap: var(--atdt-spacing-1);
+  margin-bottom: var(--atdt-spacing-3);
+}
+
+.atdt-tab {
+  padding: var(--atdt-spacing-2) var(--atdt-spacing-3);
+  font-family: var(--atdt-font-family);
+  font-size: var(--atdt-font-size-body);
+  font-weight: var(--atdt-font-weight-semibold);
+  color: var(--atdt-color-neutral-600);
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: var(--atdt-border-width-thick) solid transparent;
+  margin-bottom: calc(var(--atdt-border-width-thick) * -1);
+  transition: all var(--atdt-transition-base);
+}
+
+.atdt-tab:hover {
+  color: var(--atdt-color-primary);
+}
+
+.atdt-tab.atdt-tab-active {
+  color: var(--atdt-color-primary);
+  border-bottom-color: var(--atdt-color-primary);
+}
+
+.atdt-tab:disabled {
+  color: var(--atdt-color-neutral-400);
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+   BREADCRUMBS COMPONENT
+   ============================================================================ */
+
+.atdt-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--atdt-spacing-1);
+  font-size: var(--atdt-font-size-caption);
+  color: var(--atdt-color-neutral-600);
+  padding: var(--atdt-spacing-2) 0;
+}
+
+.atdt-breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: var(--atdt-spacing-1);
+}
+
+.atdt-breadcrumb-item a {
+  color: var(--atdt-color-primary);
+  text-decoration: none;
+}
+
+.atdt-breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+.atdt-breadcrumb-separator {
+  color: var(--atdt-color-neutral-400);
+}
+
+.atdt-breadcrumb-item:last-child {
+  color: var(--atdt-color-neutral-800);
+  font-weight: var(--atdt-font-weight-semibold);
+}
+
+/* ============================================================================
+   SEARCH BAR COMPONENT
+   ============================================================================ */
+
+.atdt-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.atdt-search-input {
+  padding-left: var(--atdt-spacing-5);
+  width: 100%;
+}
+
+.atdt-search-icon {
+  position: absolute;
+  left: var(--atdt-spacing-2);
+  color: var(--atdt-color-neutral-500);
+  pointer-events: none;
+}
+
+/* ============================================================================
+   LINK COMPONENT
+   ============================================================================ */
+
+.atdt-link {
+  color: var(--atdt-color-primary);
+  text-decoration: none;
+  font-weight: var(--atdt-font-weight-medium);
+  transition: color var(--atdt-transition-fast);
+}
+
+.atdt-link:hover {
+  color: var(--atdt-color-primary-dark);
+  text-decoration: underline;
+}
+
+.atdt-link:focus {
+  outline: none;
+  text-decoration: underline;
+  box-shadow: var(--atdt-focus-ring);
+  border-radius: 2px;
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+/* Spacing utilities */
+.atdt-m-0 { margin: var(--atdt-spacing-0) !important; }
+.atdt-m-1 { margin: var(--atdt-spacing-1) !important; }
+.atdt-m-2 { margin: var(--atdt-spacing-2) !important; }
+.atdt-m-3 { margin: var(--atdt-spacing-3) !important; }
+.atdt-m-4 { margin: var(--atdt-spacing-4) !important; }
+
+.atdt-mt-0 { margin-top: var(--atdt-spacing-0) !important; }
+.atdt-mt-1 { margin-top: var(--atdt-spacing-1) !important; }
+.atdt-mt-2 { margin-top: var(--atdt-spacing-2) !important; }
+.atdt-mt-3 { margin-top: var(--atdt-spacing-3) !important; }
+.atdt-mt-4 { margin-top: var(--atdt-spacing-4) !important; }
+
+.atdt-mb-0 { margin-bottom: var(--atdt-spacing-0) !important; }
+.atdt-mb-1 { margin-bottom: var(--atdt-spacing-1) !important; }
+.atdt-mb-2 { margin-bottom: var(--atdt-spacing-2) !important; }
+.atdt-mb-3 { margin-bottom: var(--atdt-spacing-3) !important; }
+.atdt-mb-4 { margin-bottom: var(--atdt-spacing-4) !important; }
+
+.atdt-p-0 { padding: var(--atdt-spacing-0) !important; }
+.atdt-p-1 { padding: var(--atdt-spacing-1) !important; }
+.atdt-p-2 { padding: var(--atdt-spacing-2) !important; }
+.atdt-p-3 { padding: var(--atdt-spacing-3) !important; }
+.atdt-p-4 { padding: var(--atdt-spacing-4) !important; }
+
+/* Text alignment */
+.atdt-text-left { text-align: left !important; }
+.atdt-text-center { text-align: center !important; }
+.atdt-text-right { text-align: right !important; }
+
+/* Text colors */
+.atdt-text-primary { color: var(--atdt-color-primary) !important; }
+.atdt-text-secondary { color: var(--atdt-color-secondary) !important; }
+.atdt-text-success { color: var(--atdt-color-success) !important; }
+.atdt-text-error { color: var(--atdt-color-error) !important; }
+.atdt-text-muted { color: var(--atdt-color-neutral-600) !important; }
+
+/* Background colors */
+.atdt-bg-primary { background-color: var(--atdt-color-primary) !important; }
+.atdt-bg-white { background-color: var(--atdt-color-neutral-100) !important; }
+.atdt-bg-light { background-color: var(--atdt-color-neutral-300) !important; }
+
+/* Display utilities */
+.atdt-d-none { display: none !important; }
+.atdt-d-block { display: block !important; }
+.atdt-d-flex { display: flex !important; }
+.atdt-d-inline { display: inline !important; }
+.atdt-d-inline-block { display: inline-block !important; }
+
+/* Flex utilities */
+.atdt-flex-row { flex-direction: row !important; }
+.atdt-flex-column { flex-direction: column !important; }
+.atdt-flex-wrap { flex-wrap: wrap !important; }
+.atdt-justify-start { justify-content: flex-start !important; }
+.atdt-justify-center { justify-content: center !important; }
+.atdt-justify-end { justify-content: flex-end !important; }
+.atdt-justify-between { justify-content: space-between !important; }
+.atdt-align-start { align-items: flex-start !important; }
+.atdt-align-center { align-items: center !important; }
+.atdt-align-end { align-items: flex-end !important; }
+
+/* Gap utilities */
+.atdt-gap-1 { gap: var(--atdt-spacing-1) !important; }
+.atdt-gap-2 { gap: var(--atdt-spacing-2) !important; }
+.atdt-gap-3 { gap: var(--atdt-spacing-3) !important; }
+.atdt-gap-4 { gap: var(--atdt-spacing-4) !important; }
+
+/* Width utilities */
+.atdt-w-100 { width: 100% !important; }
+.atdt-w-auto { width: auto !important; }
+
+/* ============================================================================
+   RESPONSIVE UTILITIES
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .atdt-hide-mobile { display: none !important; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .atdt-hide-tablet { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .atdt-hide-desktop { display: none !important; }
+}

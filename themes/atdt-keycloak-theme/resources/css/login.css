@@ -1,0 +1,483 @@
+/**
+ * ============================================================================
+ * ATDT Keycloak Login Theme
+ * ============================================================================
+ * 
+ * This stylesheet applies the ATDT Design System to Keycloak login pages.
+ * It uses the design tokens and components from atdt-design-system.css.
+ * 
+ * Key features:
+ * - Pixel-perfect implementation of UI KIT guidelines
+ * - Responsive layout following 8pt grid system
+ * - Llave MX branding integration
+ * - Government-grade accessibility
+ * ============================================================================
+ */
+
+/* ============================================================================
+   BASE LAYOUT
+   ============================================================================ */
+
+body.atdt-login-body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--atdt-font-family);
+  background-color: var(--atdt-color-neutral-300);
+  color: var(--atdt-color-neutral-700);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================================
+   MAIN CONTENT AREA
+   ============================================================================ */
+
+.atdt-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--atdt-spacing-3) 0;
+}
+
+/* ============================================================================
+   LOGIN WRAPPER & CARD
+   ============================================================================ */
+
+.atdt-login-wrapper {
+  width: 100%;
+  max-width: 480px;
+  padding: var(--atdt-spacing-2);
+}
+
+.atdt-login-card {
+  background-color: var(--atdt-color-neutral-100);
+  border-radius: var(--atdt-border-radius-lg);
+  box-shadow: var(--atdt-shadow-lg);
+  padding: var(--atdt-spacing-4);
+  border: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+}
+
+@media (min-width: 768px) {
+  .atdt-login-wrapper {
+    max-width: 520px;
+  }
+  
+  .atdt-login-card {
+    padding: var(--atdt-spacing-6);
+  }
+}
+
+/* ============================================================================
+   LOGIN HEADER (Logo & Title)
+   ============================================================================ */
+
+.atdt-login-header {
+  text-align: center;
+  margin-bottom: var(--atdt-spacing-4);
+}
+
+.atdt-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: var(--atdt-spacing-3);
+  display: inline-block;
+}
+
+.atdt-title {
+  font-size: var(--atdt-font-size-h2);
+  line-height: var(--atdt-line-height-h2);
+  font-weight: var(--atdt-font-weight-bold);
+  color: var(--atdt-color-primary);
+  margin: 0 0 var(--atdt-spacing-1) 0;
+}
+
+.atdt-subtitle {
+  font-size: var(--atdt-font-size-body);
+  line-height: var(--atdt-line-height-body);
+  font-weight: var(--atdt-font-weight-regular);
+  color: var(--atdt-color-neutral-700);
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .atdt-logo {
+    width: 96px;
+  }
+  
+  .atdt-title {
+    font-size: var(--atdt-font-size-h3);
+    line-height: var(--atdt-line-height-h3);
+  }
+}
+
+/* ============================================================================
+   IDENTITY PROVIDERS (Social Login)
+   ============================================================================ */
+
+.atdt-idp {
+  margin-bottom: var(--atdt-spacing-3);
+  padding-bottom: var(--atdt-spacing-3);
+  border-bottom: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+}
+
+.atdt-idp-title {
+  font-size: var(--atdt-font-size-body);
+  font-weight: var(--atdt-font-weight-semibold);
+  color: var(--atdt-color-neutral-800);
+  margin: 0 0 var(--atdt-spacing-2) 0;
+  text-align: center;
+}
+
+.atdt-idp-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--atdt-spacing-2);
+}
+
+.atdt-idp .atdt-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ============================================================================
+   LOGIN FORM
+   ============================================================================ */
+
+.atdt-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--atdt-spacing-2);
+}
+
+/* Remember me checkbox */
+.atdt-remember-me {
+  display: flex;
+  align-items: center;
+  gap: var(--atdt-spacing-1);
+  margin-bottom: var(--atdt-spacing-1);
+  flex-direction: row;
+}
+
+.atdt-remember-me input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--atdt-color-primary);
+}
+
+.atdt-remember-me label {
+  margin: 0;
+  font-size: var(--atdt-font-size-body);
+  font-weight: var(--atdt-font-weight-regular);
+  color: var(--atdt-color-neutral-700);
+  cursor: pointer;
+}
+
+/* Submit button spacing */
+#kc-login {
+  margin-top: var(--atdt-spacing-1);
+}
+
+/* ============================================================================
+   LINKS (Forgot password, Register)
+   ============================================================================ */
+
+.atdt-links {
+  margin-top: var(--atdt-spacing-2);
+  padding-top: var(--atdt-spacing-2);
+  border-top: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--atdt-spacing-2);
+  flex-wrap: wrap;
+}
+
+.atdt-links a {
+  color: var(--atdt-color-primary);
+  text-decoration: none;
+  font-size: var(--atdt-font-size-caption);
+  font-weight: var(--atdt-font-weight-medium);
+  transition: color var(--atdt-transition-fast);
+}
+
+.atdt-links a:hover {
+  color: var(--atdt-color-primary-dark);
+  text-decoration: underline;
+}
+
+.atdt-links a:focus {
+  outline: none;
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   LEGAL TEXT (Terms & Privacy)
+   ============================================================================ */
+
+.atdt-legal {
+  margin-top: var(--atdt-spacing-3);
+  padding-top: var(--atdt-spacing-3);
+  border-top: var(--atdt-border-width) solid var(--atdt-color-neutral-200);
+  text-align: center;
+}
+
+.atdt-legal small {
+  font-size: var(--atdt-font-size-caption);
+  line-height: var(--atdt-line-height-caption);
+  color: var(--atdt-color-neutral-600);
+  display: block;
+}
+
+.atdt-legal a {
+  color: var(--atdt-color-secondary);
+  text-decoration: none;
+  font-weight: var(--atdt-font-weight-medium);
+  transition: color var(--atdt-transition-fast);
+}
+
+.atdt-legal a:hover {
+  color: var(--atdt-color-dorado-110);
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   LLAVE MX BANNER (As per UI KIT specifications)
+   ============================================================================ */
+
+.atdt-llavemx-banner {
+  background: linear-gradient(135deg, var(--atdt-color-primary) 0%, var(--atdt-color-primary-dark) 100%);
+  padding: var(--atdt-spacing-4);
+  border-radius: var(--atdt-border-radius-lg);
+  color: var(--atdt-color-neutral-100);
+  margin-bottom: var(--atdt-spacing-4);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--atdt-spacing-3);
+  align-items: center;
+}
+
+.atdt-llavemx-banner-logo {
+  width: 80px;
+  height: auto;
+}
+
+.atdt-llavemx-banner-content h2 {
+  font-size: var(--atdt-font-size-h3);
+  line-height: var(--atdt-line-height-h3);
+  font-weight: var(--atdt-font-weight-bold);
+  margin: 0 0 var(--atdt-spacing-1) 0;
+  color: var(--atdt-color-neutral-100);
+}
+
+.atdt-llavemx-banner-content p {
+  font-size: var(--atdt-font-size-body);
+  line-height: var(--atdt-line-height-body);
+  margin: 0;
+  opacity: 0.95;
+}
+
+@media (max-width: 767px) {
+  .atdt-llavemx-banner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+  
+  .atdt-llavemx-banner-logo {
+    width: 64px;
+  }
+}
+
+/* ============================================================================
+   ERROR PAGE SPECIFIC STYLES
+   ============================================================================ */
+
+.atdt-error-page {
+  text-align: center;
+  padding: var(--atdt-spacing-4);
+}
+
+.atdt-error-page .atdt-h1 {
+  color: var(--atdt-color-error);
+  margin-bottom: var(--atdt-spacing-2);
+}
+
+.atdt-error-page .atdt-text {
+  margin-bottom: var(--atdt-spacing-4);
+}
+
+.atdt-error-details {
+  background-color: var(--atdt-color-neutral-300);
+  border: var(--atdt-border-width) solid var(--atdt-color-neutral-400);
+  border-radius: var(--atdt-border-radius-md);
+  padding: var(--atdt-spacing-3);
+  margin-top: var(--atdt-spacing-3);
+  text-align: left;
+}
+
+.atdt-error-details code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: var(--atdt-font-size-caption);
+  color: var(--atdt-color-neutral-800);
+  word-break: break-all;
+}
+
+/* ============================================================================
+   ADDITIONAL KEYCLOAK PAGES (Register, Reset Password, etc.)
+   ============================================================================ */
+
+/* Required fields indicator */
+.atdt-required-indicator {
+  color: var(--atdt-color-error);
+  margin-left: 4px;
+}
+
+/* Password strength meter */
+.atdt-password-strength {
+  margin-top: var(--atdt-spacing-1);
+  height: 4px;
+  background-color: var(--atdt-color-neutral-300);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.atdt-password-strength-bar {
+  height: 100%;
+  transition: width var(--atdt-transition-base), background-color var(--atdt-transition-base);
+}
+
+.atdt-password-strength-weak .atdt-password-strength-bar {
+  width: 33%;
+  background-color: var(--atdt-color-error);
+}
+
+.atdt-password-strength-medium .atdt-password-strength-bar {
+  width: 66%;
+  background-color: var(--atdt-color-warning);
+}
+
+.atdt-password-strength-strong .atdt-password-strength-bar {
+  width: 100%;
+  background-color: var(--atdt-color-success);
+}
+
+/* Info box for instructions */
+.atdt-info-box {
+  background-color: var(--atdt-color-information-light);
+  border: var(--atdt-border-width) solid var(--atdt-color-information);
+  border-radius: var(--atdt-border-radius-md);
+  padding: var(--atdt-spacing-2);
+  margin-bottom: var(--atdt-spacing-3);
+}
+
+.atdt-info-box p {
+  margin: 0;
+  font-size: var(--atdt-font-size-body);
+  color: var(--atdt-color-information);
+}
+
+/* Back link */
+.atdt-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--atdt-spacing-1);
+  color: var(--atdt-color-primary);
+  text-decoration: none;
+  font-size: var(--atdt-font-size-body);
+  font-weight: var(--atdt-font-weight-medium);
+  margin-bottom: var(--atdt-spacing-3);
+  transition: color var(--atdt-transition-fast);
+}
+
+.atdt-back-link:hover {
+  color: var(--atdt-color-primary-dark);
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================================================ */
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid var(--atdt-color-primary);
+  outline-offset: 2px;
+}
+
+/* Skip to main content link */
+.atdt-skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--atdt-color-primary);
+  color: var(--atdt-color-neutral-100);
+  padding: var(--atdt-spacing-1) var(--atdt-spacing-2);
+  text-decoration: none;
+  z-index: 10000;
+}
+
+.atdt-skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only content */
+.atdt-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+@media print {
+  .atdt-header,
+  .atdt-links,
+  .atdt-legal {
+    display: none;
+  }
+  
+  .atdt-login-card {
+    box-shadow: none;
+    border: var(--atdt-border-width) solid var(--atdt-color-neutral-800);
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   HIGH CONTRAST MODE
+   ============================================================================ */
+
+@media (prefers-contrast: high) {
+  .atdt-btn-primary {
+    border: var(--atdt-border-width-thick) solid var(--atdt-color-neutral-100);
+  }
+  
+  .atdt-input:focus {
+    outline: 3px solid var(--atdt-color-primary);
+  }
+}

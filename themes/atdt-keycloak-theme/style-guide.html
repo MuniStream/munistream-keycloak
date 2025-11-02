@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATDT Design System - Style Guide</title>
+  <link rel="stylesheet" href="resources/css/atdt-design-system.css">
+  <style>
+    body {
+      font-family: var(--atdt-font-family);
+      background-color: var(--atdt-color-neutral-300);
+      padding: var(--atdt-spacing-4);
+      margin: 0;
+    }
+    .style-guide {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section {
+      background: var(--atdt-color-neutral-100);
+      padding: var(--atdt-spacing-4);
+      margin-bottom: var(--atdt-spacing-3);
+      border-radius: var(--atdt-border-radius-lg);
+      box-shadow: var(--atdt-shadow-md);
+    }
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--atdt-spacing-2);
+    }
+    .color-swatch {
+      text-align: center;
+    }
+    .color-box {
+      height: 80px;
+      border-radius: var(--atdt-border-radius-md);
+      margin-bottom: var(--atdt-spacing-1);
+      border: 1px solid var(--atdt-color-neutral-200);
+    }
+    .button-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--atdt-spacing-2);
+    }
+    .spacing-demo {
+      display: flex;
+      flex-direction: column;
+      gap: var(--atdt-spacing-1);
+    }
+    .spacing-box {
+      background: var(--atdt-color-primary);
+      color: var(--atdt-color-neutral-100);
+      padding: var(--atdt-spacing-1);
+      text-align: center;
+      border-radius: var(--atdt-border-radius-sm);
+    }
+  </style>
+</head>
+<body>
+  <div class="style-guide">
+    
+    <!-- Header -->
+    <header class="section">
+      <h1 class="atdt-h1" style="color: var(--atdt-color-primary); margin-bottom: var(--atdt-spacing-2);">
+        ATDT Design System
+      </h1>
+      <p class="atdt-body">Guía visual de estilos basada en UI KIT (ATDT) - Febrero 2025</p>
+    </header>
+
+    <!-- Colors - Primary -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Paleta Primaria (Guinda)</h2>
+      <div class="color-grid">
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #3A0B1E;"></div>
+          <p class="atdt-caption"><strong>Guinda 170</strong></p>
+          <p class="atdt-caption">#3A0B1E</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #611232;"></div>
+          <p class="atdt-caption"><strong>Guinda 160</strong></p>
+          <p class="atdt-caption">#611232</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #9b2247;"></div>
+          <p class="atdt-caption"><strong>Guinda 150</strong></p>
+          <p class="atdt-caption">#9b2247</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #F0ECED;"></div>
+          <p class="atdt-caption"><strong>Guinda 110</strong></p>
+          <p class="atdt-caption">#F0ECED</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Colors - Secondary -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Paleta Secundaria (Dorado)</h2>
+      <div class="color-grid">
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #a57f2c;"></div>
+          <p class="atdt-caption"><strong>Dorado 110</strong></p>
+          <p class="atdt-caption">#a57f2c</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #e6d194;"></div>
+          <p class="atdt-caption"><strong>Dorado 210</strong></p>
+          <p class="atdt-caption">#e6d194</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Colors - Neutral -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Paleta Neutral</h2>
+      <div class="color-grid">
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #161a1d;"></div>
+          <p class="atdt-caption"><strong>Neutral 800</strong></p>
+          <p class="atdt-caption">#161a1d</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #575b5e;"></div>
+          <p class="atdt-caption"><strong>Neutral 700</strong></p>
+          <p class="atdt-caption">#575b5e</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #7a7c7e;"></div>
+          <p class="atdt-caption"><strong>Neutral 600</strong></p>
+          <p class="atdt-caption">#7a7c7e</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #9b9d9e;"></div>
+          <p class="atdt-caption"><strong>Neutral 500</strong></p>
+          <p class="atdt-caption">#9b9d9e</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #bcbebe;"></div>
+          <p class="atdt-caption"><strong>Neutral 400</strong></p>
+          <p class="atdt-caption">#bcbebe</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #f3f3f3;"></div>
+          <p class="atdt-caption"><strong>Neutral 300</strong></p>
+          <p class="atdt-caption">#f3f3f3</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #dededf;"></div>
+          <p class="atdt-caption"><strong>Neutral 200</strong></p>
+          <p class="atdt-caption">#dededf</p>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background-color: #ffffff;"></div>
+          <p class="atdt-caption"><strong>Neutral 100</strong></p>
+          <p class="atdt-caption">#ffffff</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Tipografía (Noto Sans)</h2>
+      <h1 class="atdt-h1">H1 - Título Principal (40px, Bold)</h1>
+      <h2 class="atdt-h2">H2 - Subtítulo (32px, Bold)</h2>
+      <h3 class="atdt-h3">H3 - Encabezado Secundario (24px, SemiBold)</h3>
+      <p class="atdt-subtitle">Subtitle - Subtítulo (20px, Bold)</p>
+      <p class="atdt-body">Body - Cuerpo de texto (16px, Regular) - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p class="atdt-caption">Caption - Notas (14px, Regular)</p>
+    </section>
+
+    <!-- Buttons -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Botones</h2>
+      <div class="button-grid">
+        <button class="atdt-btn atdt-btn-primary">Primary Button</button>
+        <button class="atdt-btn atdt-btn-outlined">Outlined Button</button>
+        <button class="atdt-btn atdt-btn-text">Text Button</button>
+        <button class="atdt-btn atdt-btn-primary" disabled>Disabled</button>
+      </div>
+      <div class="button-grid atdt-mt-3">
+        <button class="atdt-btn atdt-btn-primary atdt-btn-sm">Small</button>
+        <button class="atdt-btn atdt-btn-primary">Normal</button>
+        <button class="atdt-btn atdt-btn-primary atdt-btn-lg">Large</button>
+      </div>
+    </section>
+
+    <!-- Form Elements -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Elementos de Formulario</h2>
+      
+      <div class="atdt-form-group">
+        <label class="atdt-label">Input Normal</label>
+        <input type="text" class="atdt-input" placeholder="Placeholder text">
+        <span class="atdt-help-text">Texto de ayuda</span>
+      </div>
+
+      <div class="atdt-form-group">
+        <label class="atdt-label">Input con Error</label>
+        <input type="text" class="atdt-input atdt-input-error" value="valor incorrecto">
+        <span class="atdt-error-text">Este campo es requerido</span>
+      </div>
+
+      <div class="atdt-form-group">
+        <label class="atdt-label">Input con Éxito</label>
+        <input type="text" class="atdt-input atdt-input-success" value="valor correcto">
+        <span class="atdt-success-text">Campo válido</span>
+      </div>
+
+      <div class="atdt-form-group">
+        <label class="atdt-label">Select</label>
+        <select class="atdt-select">
+          <option>Opción 1</option>
+          <option>Opción 2</option>
+          <option>Opción 3</option>
+        </select>
+      </div>
+
+      <div class="atdt-checkbox">
+        <input type="checkbox" id="check1" checked>
+        <label for="check1">Checkbox seleccionado</label>
+      </div>
+    </section>
+
+    <!-- Alerts -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Alertas</h2>
+      <div class="atdt-alert atdt-alert-error">
+        <strong>Error:</strong> Mensaje de error
+      </div>
+      <div class="atdt-alert atdt-alert-success">
+        <strong>Éxito:</strong> Mensaje de éxito
+      </div>
+      <div class="atdt-alert atdt-alert-info">
+        <strong>Información:</strong> Mensaje informativo
+      </div>
+      <div class="atdt-alert atdt-alert-warning">
+        <strong>Advertencia:</strong> Mensaje de advertencia
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Sistema de Espaciado (8pt Grid)</h2>
+      <div class="spacing-demo">
+        <div class="spacing-box" style="width: 8px;">8px</div>
+        <div class="spacing-box" style="width: 16px;">16px</div>
+        <div class="spacing-box" style="width: 24px;">24px</div>
+        <div class="spacing-box" style="width: 32px;">32px</div>
+        <div class="spacing-box" style="width: 40px;">40px</div>
+        <div class="spacing-box" style="width: 48px;">48px</div>
+        <div class="spacing-box" style="width: 56px;">56px</div>
+        <div class="spacing-box" style="width: 64px;">64px</div>
+      </div>
+    </section>
+
+    <!-- Card -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Card</h2>
+      <div class="atdt-card">
+        <div class="atdt-card-header">
+          <h3 class="atdt-h3">Título del Card</h3>
+        </div>
+        <div class="atdt-card-body">
+          <p class="atdt-body">Este es el contenido del card. Puede contener texto, imágenes o cualquier otro elemento.</p>
+        </div>
+        <div class="atdt-card-footer">
+          <button class="atdt-btn atdt-btn-outlined">Cancelar</button>
+          <button class="atdt-btn atdt-btn-primary">Aceptar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <section class="section">
+      <h2 class="atdt-h2 atdt-mb-3">Tabs</h2>
+      <div class="atdt-tabs">
+        <button class="atdt-tab atdt-tab-active">Tab Activo</button>
+        <button class="atdt-tab">Tab 2</button>
+        <button class="atdt-tab">Tab 3</button>
+        <button class="atdt-tab" disabled>Deshabilitado</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="section atdt-text-center">
+      <p class="atdt-caption atdt-text-muted">
+        ATDT Design System v2.0.0 - Basado en UI KIT (ATDT) Febrero 2025
+      </p>
+    </footer>
+
+  </div>
+</body>
+</html>

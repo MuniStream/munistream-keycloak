@@ -1,107 +1,244 @@
 <#--
-  Login page template for the ATDT Keycloak theme.
-
-  This template intentionally avoids inheriting the built‑in
-  Keycloak layouts so that we can have full control over the markup
-  structure.  All translations come from the built‑in message
-  bundles.  The overall design is based on the ATDT UI Kit and the
-  Llave MX “Guía de uso” document.  Colors, typography and spacing
-  follow the 8pt grid system described in the provided PDFs.
+  ============================================================================
+  Login page template for the ATDT Keycloak theme
+  ============================================================================
+  
+  Based on: UI KIT (ATDT) - Febrero 2025
+  Version: 1.0.0
+  
+  This template implements the ATDT design system following:
+  - 8pt Grid System
+  - Noto Sans typography
+  - Guinda color palette
+  - Government accessibility standards (WCAG 2.1 AA)
+  - Llave MX branding guidelines
+  
+  The template avoids inheriting built-in Keycloak layouts for full control
+  over markup structure. All translations use built-in message bundles.
 -->
 
 <!DOCTYPE html>
-<#-- Use the current language if available; otherwise default to Spanish (es) to avoid null reference errors -->
-<html lang="${(locale.currentLanguage)!'es'}">
+<html lang="${(locale.currentLanguageTag)!'es'}">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>${realm.displayName!msg("loginTitle")}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>${msg("loginTitle",(realm.displayName!''))}</title>
+    
+    <#if properties.meta?has_content>
+      <#list properties.meta?split(' ') as meta>
+        <meta name="${meta?split('==')[0]}" content="${meta?split('==')[1]}"/>
+      </#list>
+    </#if>
+    
     <link rel="icon" href="${url.resourcesPath}/img/favicon.ico"/>
-    <link rel="stylesheet" href="${url.resourcesPath}/css/style.css"/>
+    
+    <#-- Design System CSS -->
+    <link rel="stylesheet" href="${url.resourcesPath}/css/atdt-design-system.css"/>
+    <link rel="stylesheet" href="${url.resourcesPath}/css/login.css"/>
+    
+    <#if properties.styles?has_content>
+      <#list properties.styles?split(' ') as style>
+        <link rel="stylesheet" href="${url.resourcesPath}/${style}"/>
+      </#list>
+    </#if>
   </head>
   <body class="atdt-login-body">
-    <#-- Top navigation/header.  This bar provides a consistent brand area across pages, as
-         recommended in the UI Kit.  It contains the Llave MX logo and the product name.
-         Additional navigation items can be added here if needed. -->
-    <header class="atdt-header">
+    <#-- Skip to main content for accessibility -->
+    <a href="#main-content" class="atdt-skip-link">${msg("skipToContent", "Saltar al contenido principal")}</a>
+    
+    <#-- 
+      ========================================================================
+      HEADER
+      ========================================================================
+      Consistent header across all pages following UI KIT specifications
+    -->
+    <header class="atdt-header" role="banner">
       <div class="atdt-container atdt-header-inner">
         <div class="atdt-header-brand">
-          <img class="atdt-header-logo" src="${url.resourcesPath}/img/logo.svg" alt="Llave MX" />
-          <span class="atdt-header-title">Llave MX</span>
+          <img class="atdt-header-logo" src="${url.resourcesPath}/img/logo.svg" alt="Llave MX" />
+          <span class="atdt-header-title">${realm.displayName!'Llave MX'}</span>
         </div>
       </div>
     </header>
-    <main class="atdt-main">
+    
+    <#-- 
+      ========================================================================
+      MAIN CONTENT
+      ========================================================================
+    -->
+    <main id="main-content" class="atdt-main" role="main">
       <div class="atdt-container">
         <div class="atdt-login-wrapper">
           <div class="atdt-login-card">
-        <div class="atdt-login-header">
-          <img class="atdt-logo" src="${url.resourcesPath}/img/logo.svg" alt="Llave MX"/>
-          <h1 class="atdt-title">${realm.displayName!'Llave MX'}</h1>
-          <p class="atdt-subtitle">Te damos la bienvenida</p>
-        </div>
-
-        <#-- Global error or info messages -->
-        <#if message?has_content>
-          <div class="atdt-alert atdt-alert-${message.type!'info'}">
-            <span>${message.summary}</span>
-          </div>
-        </#if>
-
-        <#-- Social identity provider logins (e.g. OpenID Connect buttons) -->
-        <#if social?? && social.providers?has_content>
-          <div class="atdt-idp">
-            <p class="atdt-idp-title">${msg("doSignInWith")?default("Inicia sesión con:")}</p>
-            <div class="atdt-idp-buttons">
-              <#list social.providers as provider>
-                <a class="atdt-btn atdt-btn-secondary" href="${provider.loginUrl}">${provider.displayName}</a>
-              </#list>
+            
+            <#-- 
+              ==================================================================
+              LOGIN HEADER (Logo & Welcome)
+              ==================================================================
+            -->
+            <div class="atdt-login-header">
+              <img class="atdt-logo" src="${url.resourcesPath}/img/logo.svg" alt="Llave MX"/>
+              <h1 class="atdt-title">${realm.displayName!'Llave MX'}</h1>
+              <p class="atdt-subtitle">${msg("loginWelcome", "Te damos la bienvenida")}</p>
             </div>
-          </div>
-        </#if>
 
-        <form id="kc-form-login" class="atdt-form" action="${url.loginAction}" method="post">
-          <div class="atdt-form-group">
-            <label for="username" class="atdt-label">${msg("usernameOrEmail")?default("Usuario o correo electrónico")}</label>
-            <#-- auth may be null when the form is rendered for the first time. Use a default empty string to avoid InvalidReferenceException. -->
-            <input id="username" name="username" type="text" class="atdt-input" value="${(auth.attemptedUsername)!''}" autofocus required />
-          </div>
+            <#-- 
+              ==================================================================
+              ALERT MESSAGES (Error, Info, Warning, Success)
+              ==================================================================
+            -->
+            <#if message?has_content && message.summary?has_content>
+              <div class="atdt-alert atdt-alert-${message.type}" role="alert">
+                <#if message.type == 'error'>
+                  <span class="atdt-sr-only">${msg("error", "Error")}:</span>
+                </#if>
+                <span>${kcSanitize(message.summary)?no_esc}</span>
+              </div>
+            </#if>
 
-          <div class="atdt-form-group">
-            <label for="password" class="atdt-label">${msg("password")?default("Contraseña")}</label>
-            <input id="password" name="password" type="password" class="atdt-input" autocomplete="current-password" required />
-          </div>
+            <#-- 
+              ==================================================================
+              SOCIAL / IDENTITY PROVIDER LOGINS
+              ==================================================================
+              Displays buttons for external authentication providers like
+              OpenID Connect, SAML, etc.
+            -->
+            <#if social?? && social.providers?has_content>
+              <div class="atdt-idp" role="region" aria-label="${msg("socialLogin", "Inicio de sesión social")}">
+                <p class="atdt-idp-title">${msg("doSignInWith", "Inicia sesión con:")}</p>
+                <div class="atdt-idp-buttons">
+                  <#list social.providers as provider>
+                    <a class="atdt-btn atdt-btn-outlined" 
+                       href="${provider.loginUrl}"
+                       id="social-${provider.alias}">
+                      ${provider.displayName}
+                    </a>
+                  </#list>
+                </div>
+              </div>
+            </#if>
 
-          <#if realm.rememberMe??>
-            <div class="atdt-form-group atdt-remember-me">
-              <input id="rememberMe" name="rememberMe" type="checkbox" <#if login.rememberMeChecked??>checked="checked"</#if>>
-              <label for="rememberMe">${msg("rememberMe")?default("Recordarme")}</label>
+            <#-- 
+              ==================================================================
+              LOGIN FORM
+              ==================================================================
+            -->
+            <form id="kc-form-login" 
+                  class="atdt-form" 
+                  action="${url.loginAction}" 
+                  method="post"
+                  novalidate>
+              
+              <#-- Username / Email field -->
+              <div class="atdt-form-group">
+                <label for="username" class="atdt-label">
+                  <#if !realm.loginWithEmailAllowed>
+                    ${msg("username", "Nombre de usuario")}
+                  <#elseif !realm.registrationEmailAsUsername>
+                    ${msg("usernameOrEmail", "Usuario o correo electrónico")}
+                  <#else>
+                    ${msg("email", "Correo electrónico")}
+                  </#if>
+                </label>
+                <input id="username" 
+                       name="username" 
+                       type="text" 
+                       class="atdt-input" 
+                       value="${(login.username!'')}" 
+                       autofocus 
+                       autocomplete="username"
+                       aria-required="true"
+                       required />
+              </div>
+
+              <#-- Password field -->
+              <div class="atdt-form-group">
+                <label for="password" class="atdt-label">
+                  ${msg("password", "Contraseña")}
+                </label>
+                <input id="password" 
+                       name="password" 
+                       type="password" 
+                       class="atdt-input" 
+                       autocomplete="current-password"
+                       aria-required="true"
+                       required />
+              </div>
+
+              <#-- Remember Me checkbox -->
+              <#if realm.rememberMe && !usernameEditDisabled??>
+                <div class="atdt-remember-me">
+                  <input id="rememberMe" 
+                         name="rememberMe" 
+                         type="checkbox"
+                         <#if login.rememberMe??>checked</#if>
+                         aria-describedby="rememberMeHelp">
+                  <label for="rememberMe">${msg("rememberMe", "Recordarme")}</label>
+                </div>
+              </#if>
+
+              <#-- Submit button -->
+              <button id="kc-login" 
+                      class="atdt-btn atdt-btn-primary atdt-btn-block" 
+                      type="submit"
+                      name="login">
+                ${msg("doLogIn", "Iniciar sesión")}
+              </button>
+            </form>
+
+            <#-- 
+              ==================================================================
+              ADDITIONAL LINKS (Forgot password, Register)
+              ==================================================================
+            -->
+            <#if realm.resetPasswordAllowed || realm.password && realm.registrationAllowed>
+              <div class="atdt-links">
+                <#if realm.resetPasswordAllowed>
+                  <a href="${url.loginResetCredentialsUrl}">
+                    ${msg("doForgotPassword", "¿Olvidaste tu contraseña?")}
+                  </a>
+                </#if>
+                <#if realm.password && realm.registrationAllowed && !registrationDisabled??>
+                  <a href="${url.registrationUrl}">
+                    ${msg("doRegister", "Crear cuenta")}
+                  </a>
+                </#if>
+              </div>
+            </#if>
+
+            <#-- 
+              ==================================================================
+              LEGAL NOTICE (Terms & Privacy)
+              ==================================================================
+            -->
+            <div class="atdt-legal">
+              <small>
+                ${msg("loginTermsText", "Al iniciar sesión declaro que he leído los")}
+                <a href="${properties.termsLink!'#'}" target="_blank" rel="noopener noreferrer">
+                  ${msg("termsTitle", "Términos y Condiciones")}
+                </a>
+                ${msg("and", "y nuestro")}
+                <a href="${properties.privacyLink!'#'}" target="_blank" rel="noopener noreferrer">
+                  ${msg("privacyTitle", "Aviso de Privacidad")}
+                </a>.
+              </small>
             </div>
-          </#if>
 
-          <button id="kc-login" class="atdt-btn atdt-btn-primary" type="submit">${msg("doSignIn")?default("Iniciar sesión")}</button>
-        </form>
-
-        <div class="atdt-links">
-          <#if realm.resetPasswordAllowed>
-            <a href="${url.loginResetCredentialsUrl}">${msg("doForgotPassword")?default("¿Olvidaste tu contraseña?")}</a>
-          </#if>
-          <#if realm.registrationAllowed>
-            <a href="${url.registrationUrl}">${msg("doRegister")?default("Crear cuenta")}</a>
-          </#if>
-        </div>
-
-        <div class="atdt-legal">
-          <small>
-            Al iniciar sesión declaro que he leído los
-            <a href="${properties['termsLink']?default('#')}" target="_blank">Términos y Condiciones</a>
-            y nuestro
-            <a href="${properties['privacyLink']?default('#')}" target="_blank">Aviso de Privacidad</a>.
-          </small>
-        </div>
-          </div><!-- /.atdt-login-card -->
-        </div><!-- /.atdt-login-wrapper -->
-      </div><!-- /.atdt-container -->
+          </div><#-- /.atdt-login-card -->
+        </div><#-- /.atdt-login-wrapper -->
+      </div><#-- /.atdt-container -->
     </main>
+
+    <#-- 
+      ========================================================================
+      SCRIPTS (if needed)
+      ========================================================================
+    -->
+    <#if properties.scripts?has_content>
+      <#list properties.scripts?split(' ') as script>
+        <script src="${url.resourcesPath}/${script}" defer></script>
+      </#list>
+    </#if>
   </body>
 </html>
